@@ -1,3 +1,4 @@
+
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -77,6 +78,7 @@
     .modalInner{background:var(--card);padding:18px;border-radius:12px;max-width:720px;width:92%}
 
     @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
     @media(max-width:640px){.qtext{font-size:16px}.svgIcon{width:34px;height:34px}}
   </style>
 </head>
@@ -165,6 +167,7 @@
         {label:'Слушаю интуицию и чувства людей', v:'social', icon:'brain'},
         {label:'Стратегически и с учётом рисков', v:'business', icon:'shield'},
       ]},
+
       {q:'Что даётся легче всего?', name:'q5', opts:[
         {label:'Организовывать и планировать', v:'business', icon:'calendar'},
         {label:'Решать логические задачи', v:'it', icon:'puzzle'},
@@ -210,23 +213,95 @@
       ]},
     ];
     const icons = {
-      briefcase: <svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 7h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>,
-      code: <svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L3 12l6-6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M15 6l6 6-6 6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>,
-      people:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/><path d='M20 8v6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/></svg>,
-      chart:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 3v18h18' stroke='currentColor' stroke-width='1.5'/><path d='M7 13l4-4 4 6 4-10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>,
-      team:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/><circle cx='17' cy='8' r='3' stroke='currentColor' stroke-width='1.5'/></svg>,
-      mic:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2v11' stroke='currentColor' stroke-width='1.2'/><path d='M19 11v1a7 7 0 0 1-14 0v-1' stroke='currentColor' stroke-width='1.2'/></svg>,
-      handshake:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l8 8 6-6 6 6' stroke='currentColor' stroke-width='1.2'/></svg>,
-      gear:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' stroke='currentColor' stroke-width='1.2'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 0 1 2.3 18.9l.06-.06A1.65 1.65 0 0 0 2.7 17 1.65 1.65 0 0 0 1.37 15l-.06-.06A2 2 0 0 1 4.14 10.1l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V9a2 2 0 0 1 4 0v.09c.12.6.47 1.08 1 1.51.6.47 1.3.57 1.82-.33l.06-.06A2 2 0 0 1 19.7 6.1l-.06.06A1.65 1.65 0 0 0 19.4 8z' stroke='currentColor' stroke-width='0.9'/></svg>,
-      lab:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M4 21h16' stroke='currentColor' stroke-width='1.2'/><path d='M8 21V8l6-4 6 4v13' stroke='currentColor' stroke-width='1.2'/></svg>,
-      office:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='18' height='18' rx='2' stroke='currentColor' stroke-width='1.2'/></svg>,
-      school:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l10 6-10 6L2 8l10-6z' stroke='currentColor' stroke-width='1.2'/></svg>,
-      badge:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l3 7h7l-5.5 4L20 22l-8-5-8 5 1.5-9L0 9h7l3-7z' stroke='currentColor' stroke-width='1.0'/></svg>,
-      book:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 3h20v18H2z' stroke='currentColor' stroke-width='1.2'/></svg>,
-      hands:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l5-5 5 5' stroke='currentColor' stroke-width='1.2'/></svg>,
-      brush:<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 21l18-18' stroke='currentColor' stroke-width='1.2'/></svg>
+      briefcase: `<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 7h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      code: `<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L3 12l6-6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M15 6l6 6-6 6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      people:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/><path d='M20 8v6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/></svg>`,
+      chart:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 3v18h18' stroke='currentColor' stroke-width='1.5'/><path d='M7 13l4-4 4 6 4-10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      team:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/><circle cx='17' cy='8' r='3' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      hand:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2v8' stroke='currentColor' stroke-width='1.5'/><path d='M8 7v6' stroke='currentColor' stroke-width='1.5'/><path d='M16 7v6' stroke='currentColor' stroke-width='1.5'/><path d='M4 21v-9a4 4 0 0 1 4-4h8' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      analytics:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='6' height='6' stroke='currentColor' stroke-width='1.5'/><rect x='15' y='3' width='6' height='12' stroke='currentColor' stroke-width='1.5'/><rect x='9' y='15' width='6' height='6' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      chartUp:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 3v18h18' stroke='currentColor' stroke-width='1.5'/><path d='M7 13l4-4 4 6 4-10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      rocket:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 22s4-2 6-4 4-6 5-7 4-5 4-5l-4-4s-3 1-5 3-6 8-6 8-1 4-0 9z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      heart:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M20.8 4.6c-1.6-1.5-4-1.5-5.6-.2L12 7 8.8 4.4C7.2 3.1 4.8 3.1 3.2 4.6-.4 8 .6 14 6 18.2L12 22l6-3.8c5.4-4.2 6.4-10.2 3-13.6z' stroke='currentColor' stroke-width='1.2' fill='none'/></svg>`,
+      magnify:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><circle cx='11' cy='11' r='6' stroke='currentColor' stroke-width='1.5'/><path d='M21 21l-4.3-4.3' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      group:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      brain:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M20 12c0-4.4-3-8-8-8S4 7.6 4 12s3 8 8 8 8-3.6 8-8z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      shield:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l7 4v6c0 5-3.4 9.7-7 10-3.6-.3-7-5-7-10V6l7-4z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      calendar:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='5' width='18' height='16' rx='2' stroke='currentColor' stroke-width='1.2'/><path d='M16 3v4M8 3v4' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      puzzle:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 3v4H3v4h8V7H7V3zM17 21v-4h4v-4h-8v8h4z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      chat:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      pen:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 21l3-1 11-11 1-3L12 3 3 12v9z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      calculator:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='18' height='18' rx='2' stroke='currentColor' stroke-width='1.2'/><path d='M7 7h10M7 11h10' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      crown:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l4-8 4 8 4-6 4 6 4-8 0 10H2z' stroke='currentColor' stroke-width='1'/></svg>`,
+      mic:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2v11' stroke='currentColor' stroke-width='1.2'/><path d='M19 11v1a7 7 0 0 1-14 0v-1' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      handshake:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l8 8 6-6 6 6' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      gear:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' stroke='currentColor' stroke-width='1.2'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 0 1 2.3 18.9l.06-.06A1.65 1.65 0 0 0 2.7 17 1.65 1.65 0 0 0 1.37 15l-.06-.06A2 2 0 0 1 4.14 10.1l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V9a2 2 0 0 1 4 0v.09c.12 .6 .47 1.08 1 1.51.6.47 1.3 .57 1.82-.33l.06-.06A2 2 0 0 1 19.7 6.1l-.06.06A1.65 1.65 0 0 0 19.4 8z' stroke='currentColor' stroke-width='0.9'/></svg>`,
+      lab:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M4 21h16' stroke='currentColor' stroke-width='1.2'/><path d='M8 21V8l6-4 6 4v13' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      office:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='18' height='18' rx='2' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      school:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l10 6-10 6L2 8l10-6z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      badge:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l3 7h7l-5.5 4L20 22l-8-5-8 5 1.5-9L0 9h7l3-7z' stroke='currentColor' stroke-width='1.0'/></svg>`,
+      book:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 3h20v18H2z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      hands:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l5-5 5 5' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      brush:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 21l18-18' stroke='currentColor' stroke-width='1.2'/></svg>`
     };
-    const titles = {business:'Бизнес и менеджмент', it:'Информационные технологии', social:'Социальные науки'};
+    const qWrap = document.getElementById('questionWrap');
+    questions.forEach((it, idx)=>{
+      const div = document.createElement('div'); div.className='step'; div.dataset.step = idx+1;
+      const title = document.createElement('div'); title.className='qtitle';
+      title.innerHTML = `<div class='qnum'>${idx+1}</div><div class='qtext'>${it.q}</div>`;
+      div.appendChild(title);
+
+      const optWrap = document.createElement('div'); optWrap.className='options';
+      it.opts.forEach((o,i)=>{
+        const lab = document.createElement('label'); lab.className='option';
+        lab.innerHTML = `<div class='svgIcon' aria-hidden style='color:var(--alma-blue)'>${icons[o.icon]||icons['briefcase']}</div><input type='radio' name='${it.name}' value='${o.v}'><div>${o.label}</div>`;
+        optWrap.appendChild(lab);
+      });
+
+      div.appendChild(optWrap);
+      qWrap.appendChild(div);
+    });
+    let current = 1, total = questions.length;
+    function showStep(n){
+      document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+      const el = document.querySelector(`.step[data-step='${n}']`); if(el) el.classList.add('active');
+      document.getElementById('progressText').innerText = `Вопрос ${n} из ${total}`;
+      const percent = Math.round(((n-1)/(total-1))*100);
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('prevBtn').style.display = n>1? 'inline-flex':'none';
+      document.getElementById('nextBtn').innerText = n<total? 'Далее':'Завершить';
+    }
+    showStep(1);
+    document.getElementById('nextBtn').addEventListener('click', ()=>{
+      const checked = document.querySelector(`.step[data-step='${current}'] input[type=radio]:checked`);
+      if(!checked){ alert('Пожалуйста, выберите вариант ответа, чтобы продолжить.'); return; }
+      if(current<total){ current++; showStep(current); return; }
+      onFinish();
+    });
+    document.getElementById('prevBtn').addEventListener('click', ()=>{ if(current>1){ current--; showStep(current); }});
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', ()=>{
+      const root = document.documentElement;
+      if(root.hasAttribute('data-theme')){ root.removeAttribute('data-theme'); } else { root.setAttribute('data-theme','dark'); }
+    });
+    document.getElementById('schemeAlma').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#005dff'); document.documentElement.style.setProperty('--alma-blue','#00318c'); });
+    document.getElementById('schemeDark').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#7fb0ff'); document.documentElement.style.setProperty('--alma-blue','#7fb0ff'); document.documentElement.setAttribute('data-theme','dark'); });
+
+    document.getElementById('restartBtn').addEventListener('click', ()=>{ document.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false); current=1; showStep(1); document.getElementById('resultModal').classList.remove('open'); document.getElementById('modalContent').innerHTML=''; });
+    document.getElementById('shareBtn').addEventListener('click', ()=>{
+      const el = document.getElementById('modalContent');
+      if(!el.innerHTML) alert('Сначала пройди тест, чтобы поделиться результатом.');
+      else{ navigator.share ? navigator.share({ title:'Мой результат AlmaU', text: el.innerText }) .catch(()=> alert('Ошибка при шаринге')) : alert('На этом устройстве Web Share API не поддерживается.'); }
+    });
+    function onFinish(){
+      const counts = {business:0,it:0,social:0};
+      questions.forEach((q,idx)=>{
+        const val = document.querySelector(`input[name='${q.name}']:checked`).value;
+        counts[val] = (counts[val]||0)+1;
+      });
+      const maxKey = Object.keys(counts).reduce((a,b)=> counts[a]>=counts[b]?a:b);
+
+      const titles = {business:'Бизнес и менеджмент', it:'Информационные технологии', social:'Социальные науки'};
       const desc = {
         business:'Ты склоняешься к лидерским и организационным ролям. Подойдут программы: менеджмент, маркетинг, финансы, предпринимательство.',
         it:'Тебя привлекают технологии и логика — отличные перспективы в: программировании, data science, кибербезопасности.',
@@ -268,7 +343,7 @@ ${desc[maxKey]}`})})
         .then(r=>r.json()).then(j=>{ if(j.ok) alert('Отправлено в Telegram'); else alert('Ошибка: '+ (j.description||'unknown')) }).catch(e=>alert('Ошибка отправки'));
       });
 
-    
+    }
     document.getElementById('closeModal').addEventListener('click', ()=>{ document.getElementById('resultModal').classList.remove('open'); });
     window.addEventListener('beforeunload', (e)=>{});
   </script>
