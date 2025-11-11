@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlmaU — Профориентационный тест </title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --alma-blue:#00318c; --accent:#005dff; --muted:#6b7280; --bg:#f6f8ff; --card:#ffffff;
+    }
+    [data-theme='dark']{ --alma-blue:#7fb0ff; --accent:#2b6cff; --muted:#cbd5e1; --bg:#07102a; --card:#071b35 }
+:root{
+--bg:#ffffff;
+--card:#ffffff;
+--text:#0a0a0a;
+--accent:#00318c;
+--accent-light:#e6edff;
+--option-bg:#f4f7ff;
+--option-hover:#e6edff;
+}
+:root[data-theme="dark"]{
+--bg:#0d0f14;
+--card:#161b22;
+--text:#f7faff;
+--accent:#4c91ff;
+--accent-light:#1d2633;
+--option-bg:#1d2633;
+--option-hover:#253043;
+}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#fff);margin:0;padding:28px;display:flex;justify-content:center}
+    .wrap{width:100%;max-width:980px}
+    header{text-align:center;margin-bottom:18px}
+    .logo{width:120px;margin:0 auto 6px}
+    h1{color:var(--alma-blue);margin:6px 0 0;font-size:28px;font-weight:800}
+    .lead{color:var(--muted);margin:6px 0 12px}
+
+    .card{background:var(--card);border-radius:18px;padding:20px;box-shadow:0 12px 30px rgba(2,6,23,0.08);overflow:hidden}
+
+    .toprow{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .left{display:flex;gap:12px;align-items:center}
+    .themeToggle{padding:8px 10px;border-radius:10px;border:none;background:transparent;cursor:pointer}
+
+    .progressWrap{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .progressText{font-weight:700;color:var(--alma-blue)}
+    .progressBar{flex:1;height:10px;background:#eef3ff;border-radius:999px;overflow:hidden}
+    .progressFill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#0044c9);transition:width .35s}
+
+    .questionWrap{min-height:180px}
+    .step{display:none;animation:fade .36s ease both}
+    .step.active{display:block}
+    .qtitle{display:flex;gap:12px;align-items:center}
+    .qnum{background:linear-gradient(180deg,var(--accent),#0044c9);color:white;padding:8px;border-radius:10px;font-weight:700}
+    .qtext{font-size:18px;color:var(--alma-blue);font-weight:700}
+
+    .options{display:grid;gap:10px;margin-top:12px}
+    .option{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:#f7f9ff;cursor:pointer;transition:transform .12s,box-shadow .12s}
+    .option:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(2,6,23,0.05)}
+    .option input{transform:scale(1.15)}
+    .svgIcon{width:38px;height:38px;flex-shrink:0;border-radius:8px;background:linear-gradient(180deg,#fff,#f3f6ff);display:flex;align-items:center;justify-content:center}
+
+    .actions{display:flex;gap:12px;margin-top:18px}
+    .btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--accent);color:white}
+    .btn.ghost{background:#f0f4ff;color:var(--alma-blue)}
+
+    .meta{display:flex;gap:12px;align-items:center;margin-top:10px}
+    .schemes{display:flex;gap:8px}
+    .chip{padding:8px 10px;border-radius:10px;background:#eef3ff;cursor:pointer}
+
+    .resultCard{margin-top:16px;padding:18px;border-radius:14px;background:linear-gradient(180deg,#f6f9ff,#eef4ff);}
+    .resultCard h2{margin:0 0 8px;color:var(--alma-blue)}
+
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45)}
+    .modal.open{display:flex}
+    .modalInner{background:var(--card);padding:18px;border-radius:12px;max-width:720px;width:92%}
+
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    @media(max-width:640px){.qtext{font-size:16px}.svgIcon{width:34px;height:34px}}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header>
+      <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/0e/AlmaU_logo.png" alt="AlmaU">
+      <h1>AlmaU — Расширенный профориентационный тест</h1>
+      <div class="lead">Узнай какая специальность подходит тебе больше всего, легко и точно.</div>
+    </header>
+
+    <div class="card">
+
+      <div class="toprow">
+        <div class="left">
+          <div class="progressWrap" style="min-width:320px;">
+            <div class="progressText" id="progressText">Вопрос 1 из 10</div>
+            <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
+          </div>
+        </div>
+        <div class="right">
+          <button class="themeToggle" id="themeBtn" title="Переключить тему">Тема</button>
+          <div class="schemes">
+            <div class="chip" id="schemeAlma">AlmaU</div>
+            <div class="chip" id="schemeDark">Светлая</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="questionWrap" id="questionWrap">
+     </div>
+
+      <div class="actions">
+        <button class="btn ghost" id="prevBtn" style="display:none">Назад</button>
+        <button class="btn primary" id="nextBtn">Далее</button>
+      </div>
+
+      <div class="meta">
+        <div class="small">Иконки: минималистичные SVG</div>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <button class="chip" id="shareBtn">Поделиться</button>
+          <button class="chip" id="restartBtn">Пройти снова</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal" id="resultModal">
+    <div class="modalInner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 style="margin:0">Твой результат</h3>
+        <button id="closeModal" style="background:transparent;border:none;cursor:pointer">✕</button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+  const questions = [
+      {q:'Что тебе нравится больше всего?', name:'q1', opts:[
+        {label:'Управлять проектами', v:'business', icon:'briefcase'},
+        {label:'Писать код и строить сервисы', v:'it', icon:'code'},
+        {label:'Проводить консультации с людьми', v:'social', icon:'people'},
+        {label:'Анализировать данные', v:'it', icon:'chart'},
+      ]},
+
+      {q:'Какой формат работы тебе ближе?', name:'q2', opts:[
+        {label:'Командная, много коммуникации', v:'business', icon:'team'},
+        {label:'Фокус на задачах и одиночная работа', v:'it', icon:'laptop'},
+        {label:'Гибкий график, помощь людям', v:'social', icon:'hand'},
+        {label:'Исследования и цифры', v:'it', icon:'analytics'},
+      ]},
+
+      {q:'Что тебя мотивирует?', name:'q3', opts:[
+        {label:'Рост и карьерный успех', v:'business', icon:'chartUp'},
+        {label:'Создание новых технологий', v:'it', icon:'rocket'},
+        {label:'Влияние на людей', v:'social', icon:'heart'},
+        {label:'Творческие проекты', v:'business', icon:'light'},
+      ]},
+
+      {q:'Как ты принимаешь решения?', name:'q4', opts:[
+        {label:'Собираю данные и делаю выводы', v:'it', icon:'magnify'},
+        {label:'Советуюсь с командой', v:'business', icon:'group'},
+        {label:'Слушаю интуицию и чувства людей', v:'social', icon:'brain'},
+        {label:'Стратегически и с учётом рисков', v:'business', icon:'shield'},
+      ]},
+
+      {q:'Что даётся легче всего?', name:'q5', opts:[
+        {label:'Организовывать и планировать', v:'business', icon:'calendar'},
+        {label:'Решать логические задачи', v:'it', icon:'puzzle'},
+        {label:'Находить подход к людям', v:'social', icon:'chat'},
+        {label:'Писать тексты и презентации', v:'business', icon:'pen'},
+        {label:'Работать с числами', v:'it', icon:'calculator'},
+      ]},
+
+      {q:'Что бы ты выбрал в проекте?', name:'q6', opts:[
+        {label:'Руководить командой', v:'business', icon:'crown'},
+        {label:'Писать бэкенд/фронтенд', v:'it', icon:'code'},
+        {label:'Проводить интервью с людьми', v:'social', icon:'mic'},
+        {label:'Анализировать поведение пользователей', v:'it', icon:'chart'},
+      ]},
+
+      {q:'Какой навык хочешь прокачать?', name:'q7', opts:[
+        {label:'Влияние и переговоры', v:'business', icon:'handshake'},
+        {label:'Алгоритмы и системы', v:'it', icon:'gear'},
+        {label:'Эмпатия и коммуникация', v:'social', icon:'heart'},
+        {label:'Методы исследования', v:'it', icon:'lab'},
+        {label:'Креативное мышление', v:'business', icon:'spark'},
+      ]},
+
+      {q:'Где хочешь работать через 5 лет?', name:'q8', opts:[
+        {label:'В крупной компании на руководящей роли', v:'business', icon:'office'},
+        {label:'В стартапе/команде разработчиков', v:'it', icon:'rocket'},
+        {label:'В образовательном или социальном проекте', v:'social', icon:'school'},
+        {label:'В аналитическом центре или науке', v:'it', icon:'beaker'},
+      ]},
+
+      {q:'Что для тебя ценнее в профессии?', name:'q9', opts:[
+        {label:'Влияние и статус', v:'business', icon:'badge'},
+        {label:'Постоянное развитие навыков', v:'it', icon:'book'},
+        {label:'Помощь людям и сообществу', v:'social', icon:'hands'},
+        {label:'Свобода творчества', v:'business', icon:'brush'},
+      ]},
+
+      {q:'Кем видишь себя?', name:'q10', opts:[
+        {label:'Руководителем / предпринимателем', v:'business', icon:'briefcase'},
+        {label:'Разработчиком / инженером', v:'it', icon:'code'},
+        {label:'Психологом / HR / педагогом', v:'social', icon:'people'},
+        {label:'Аналитиком / Data Scientist', v:'it', icon:'chart'},
+      ]},
+    ];
+    const icons = {
+      briefcase: `<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 7h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      code: `<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L3 12l6-6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M15 6l6 6-6 6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      people:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/><path d='M20 8v6' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/></svg>`,
+      chart:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 3v18h18' stroke='currentColor' stroke-width='1.5'/><path d='M7 13l4-4 4 6 4-10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      team:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/><circle cx='17' cy='8' r='3' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      hand:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2v8' stroke='currentColor' stroke-width='1.5'/><path d='M8 7v6' stroke='currentColor' stroke-width='1.5'/><path d='M16 7v6' stroke='currentColor' stroke-width='1.5'/><path d='M4 21v-9a4 4 0 0 1 4-4h8' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      analytics:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='6' height='6' stroke='currentColor' stroke-width='1.5'/><rect x='15' y='3' width='6' height='12' stroke='currentColor' stroke-width='1.5'/><rect x='9' y='15' width='6' height='6' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      chartUp:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 3v18h18' stroke='currentColor' stroke-width='1.5'/><path d='M7 13l4-4 4 6 4-10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+      rocket:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 22s4-2 6-4 4-6 5-7 4-5 4-5l-4-4s-3 1-5 3-6 8-6 8-1 4-0 9z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      heart:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M20.8 4.6c-1.6-1.5-4-1.5-5.6-.2L12 7 8.8 4.4C7.2 3.1 4.8 3.1 3.2 4.6-.4 8 .6 14 6 18.2L12 22l6-3.8c5.4-4.2 6.4-10.2 3-13.6z' stroke='currentColor' stroke-width='1.2' fill='none'/></svg>`,
+      magnify:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><circle cx='11' cy='11' r='6' stroke='currentColor' stroke-width='1.5'/><path d='M21 21l-4.3-4.3' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      group:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2' stroke='currentColor' stroke-width='1.5'/><circle cx='9' cy='7' r='4' stroke='currentColor' stroke-width='1.5'/></svg>`,
+      brain:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M20 12c0-4.4-3-8-8-8S4 7.6 4 12s3 8 8 8 8-3.6 8-8z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      shield:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l7 4v6c0 5-3.4 9.7-7 10-3.6-.3-7-5-7-10V6l7-4z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      calendar:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='5' width='18' height='16' rx='2' stroke='currentColor' stroke-width='1.2'/><path d='M16 3v4M8 3v4' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      puzzle:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 3v4H3v4h8V7H7V3zM17 21v-4h4v-4h-8v8h4z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      chat:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      pen:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 21l3-1 11-11 1-3L12 3 3 12v9z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      calculator:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='18' height='18' rx='2' stroke='currentColor' stroke-width='1.2'/><path d='M7 7h10M7 11h10' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      crown:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l4-8 4 8 4-6 4 6 4-8 0 10H2z' stroke='currentColor' stroke-width='1'/></svg>`,
+      mic:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2v11' stroke='currentColor' stroke-width='1.2'/><path d='M19 11v1a7 7 0 0 1-14 0v-1' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      handshake:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l8 8 6-6 6 6' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      gear:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' stroke='currentColor' stroke-width='1.2'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 0 1 2.3 18.9l.06-.06A1.65 1.65 0 0 0 2.7 17 1.65 1.65 0 0 0 1.37 15l-.06-.06A2 2 0 0 1 4.14 10.1l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V9a2 2 0 0 1 4 0v.09c.12.6.47 1.08 1 1.51.6.47 1.3.57 1.82-.33l.06-.06A2 2 0 0 1 19.7 6.1l-.06.06A1.65 1.65 0 0 0 19.4 8z' stroke='currentColor' stroke-width='0.9'/></svg>`,
+      lab:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M4 21h16' stroke='currentColor' stroke-width='1.2'/><path d='M8 21V8l6-4 6 4v13' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      office:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='18' height='18' rx='2' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      school:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l10 6-10 6L2 8l10-6z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      badge:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l3 7h7l-5.5 4L20 22l-8-5-8 5 1.5-9L0 9h7l3-7z' stroke='currentColor' stroke-width='1.0'/></svg>`,
+      book:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 3h20v18H2z' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      hands:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M2 12l5-5 5 5' stroke='currentColor' stroke-width='1.2'/></svg>`,
+      brush:`<svg viewBox='0 0 24 24' fill='none' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M3 21l18-18' stroke='currentColor' stroke-width='1.2'/></svg>`
+    };
+    const qWrap = document.getElementById('questionWrap');
+    questions.forEach((it, idx)=>{
+      const div = document.createElement('div'); div.className='step'; div.dataset.step = idx+1;
+      const title = document.createElement('div'); title.className='qtitle';
+      title.innerHTML = `<div class='qnum'>${idx+1}</div><div class='qtext'>${it.q}</div>`;
+      div.appendChild(title);
+
+      const optWrap = document.createElement('div'); optWrap.className='options';
+      it.opts.forEach((o,i)=>{
+        const lab = document.createElement('label'); lab.className='option';
+        lab.innerHTML = `<div class='svgIcon' aria-hidden style='color:var(--alma-blue)'>${icons[o.icon]||icons['briefcase']}</div><input type='radio' name='${it.name}' value='${o.v}'><div>${o.label}</div>`;
+        optWrap.appendChild(lab);
+      });
+
+      div.appendChild(optWrap);
+      qWrap.appendChild(div);
+    });
+    let current = 1, total = questions.length;
+    function showStep(n){
+      document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+      const el = document.querySelector(`.step[data-step='${n}']`); if(el) el.classList.add('active');
+      document.getElementById('progressText').innerText = `Вопрос ${n} из ${total}`;
+      const percent = Math.round(((n-1)/(total-1))*100);
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('prevBtn').style.display = n>1? 'inline-flex':'none';
+      document.getElementById('nextBtn').innerText = n<total? 'Далее':'Завершить';
+    }
+    showStep(1);
+    document.getElementById('nextBtn').addEventListener('click', ()=>{
+      const checked = document.querySelector(`.step[data-step='${current}'] input[type=radio]:checked`);
+      if(!checked){ alert('Пожалуйста, выберите вариант ответа, чтобы продолжить.'); return; }
+      if(current<total){ current++; showStep(current); return; }
+      onFinish();
+    });
+    document.getElementById('prevBtn').addEventListener('click', ()=>{ if(current>1){ current--; showStep(current); }});
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', ()=>{
+      const root = document.documentElement;
+      if(root.hasAttribute('data-theme')){ root.removeAttribute('data-theme'); } else { root.setAttribute('data-theme','dark'); }
+    });
+    document.getElementById('schemeAlma').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#005dff'); document.documentElement.style.setProperty('--alma-blue','#00318c'); });
+    document.getElementById('schemeDark').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#7fb0ff'); document.documentElement.style.setProperty('--alma-blue','#7fb0ff'); document.documentElement.setAttribute('data-theme','dark'); });
+
+    document.getElementById('restartBtn').addEventListener('click', ()=>{ document.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false); current=1; showStep(1); document.getElementById('resultModal').classList.remove('open'); document.getElementById('modalContent').innerHTML=''; });
+    document.getElementById('shareBtn').addEventListener('click', ()=>{
+      const el = document.getElementById('modalContent');
+      if(!el.innerHTML) alert('Сначала пройди тест, чтобы поделиться результатом.');
+      else{ navigator.share ? navigator.share({ title:'Мой результат AlmaU', text: el.innerText }) .catch(()=> alert('Ошибка при шаринге')) : alert('На этом устройстве Web Share API не поддерживается.'); }
+    });
+    function onFinish(){
+      const counts = {business:0,it:0,social:0};
+      questions.forEach((q,idx)=>{
+        const val = document.querySelector(`input[name='${q.name}']:checked`).value;
+        counts[val] = (counts[val]||0)+1;
+      });
+      const maxKey = Object.keys(counts).reduce((a,b)=> counts[a]>=counts[b]?a:b);
+
+      const titles = {business:'Бизнес и менеджмент', it:'Информационные технологии', social:'Социальные науки'};
+      const desc = {
+        business:'Ты склоняешься к лидерским и организационным ролям. Подойдут программы: менеджмент, маркетинг, финансы, предпринимательство.',
+        it:'Тебя привлекают технологии и логика — отличные перспективы в: программировании, data science, кибербезопасности.',
+        social:'Твоя сила — в работе с людьми. Рассмотри: психологию, педагогику, HR, социальную работу.'
+      };
+      const modal = document.getElementById('resultModal');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <div style='display:flex;gap:14px;align-items:flex-start'>
+          <div style='flex:1'>
+            <h2 style='margin:0 0 6px;color:var(--alma-blue)'>${titles[maxKey]}</h2>
+            <p style='margin:0 0 10px'>${desc[maxKey]}</p>
+            <div style='display:flex;gap:8px;margin-top:8px'>
+              <button id='pdfBtn' class='btn primary' style='padding:10px 12px'>Скачать PDF</button>
+              <button id='copyBtn' class='btn ghost' style='padding:10px 12px'>Копировать текст</button>
+              <button id='tgBtn' class='btn ghost' style='padding:10px 12px'>Отправить в Telegram</button>
+            </div>
+          </div>
+          <div style='width:260px'>
+            <canvas id='resultChart' width='260' height='200'></canvas>
+          </div>
+        </div>
+      `;
+      modal.classList.add('open');
+      const ctx = document.getElementById('resultChart').getContext('2d');
+      const chart = new Chart(ctx, {type:'doughnut', data:{labels:['Бизнес','IT','Социальные'], datasets:[{data:[counts.business,counts.it,counts.social],backgroundColor:['#005dff','#2b6cff','#9bb7ff'],hoverOffset:6}]}, options:{plugins:{legend:{position:'bottom'}}}});
+      document.getElementById('pdfBtn').addEventListener('click', ()=>{ html2pdf().from(content).set({filename:'AlmaU_result.pdf',html2canvas:{scale:2}}).save(); });
+      document.getElementById('copyBtn').addEventListener('click', ()=>{ navigator.clipboard.writeText(`${titles[maxKey]}
+
+${desc[maxKey]}`); alert('Текст скопирован в буфер обмена'); });
+
+      document.getElementById('tgBtn').addEventListener('click', ()=>{
+        const token = prompt('Вставь BOT TOKEN (123:ABC...):');
+        const chatId = prompt('Вставь CHAT_ID (напр., твой id или канала):');
+        if(!token || !chatId){ alert('Требуется токен и chat_id'); return; }
+        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({chat_id:chatId, text:`${titles[maxKey]}
+
+${desc[maxKey]}`})})
+        .then(r=>r.json()).then(j=>{ if(j.ok) alert('Отправлено в Telegram'); else alert('Ошибка: '+ (j.description||'unknown')) }).catch(e=>alert('Ошибка отправки'));
+      });
+
+    }
+    document.getElementById('closeModal').addEventListener('click', ()=>{ document.getElementById('resultModal').classList.remove('open'); });
+    window.addEventListener('beforeunload', (e)=>{});
+  </script>
+</body>
+</html>
